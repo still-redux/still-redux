@@ -68,7 +68,7 @@
 					<h1>still-redux</h1>
 				</a>
 				<p><code>Still-redux</code> is a utility that provides fast development of <code>redux</code> applications with a good developer experience. It&#39;s not a state manager, but a small wrapper around <code>redux</code> and is suitable for use in projects where <code>react-redux</code> is already used.</p>
-				<p>Made with respect to:<br>:star_struck: good api for fast development<br>:100: redux compatibility<br>:rocket: typescript support  </p>
+				<p>Made with respect to:<br>:star_struck: good api for fast development<br>:raised_hands: redux and redux-toolkit compatibility<br>:rocket: typescript support  </p>
 				<p>Forget what you know about <code>redux</code>. With <code>still-redux</code>, there are only two simple steps:</p>
 				<ol>
 					<li>define the initial state</li>
@@ -143,6 +143,18 @@
 <span class="hljs-keyword">const</span> rootReducer = combineReducers({
    ...todolist.getReducer(),
    <span class="hljs-comment">// ... other reducers</span>
+})
+</code></pre>
+				<p>Or with <code>redux-toolkit</code> helper:</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { configureStore } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@reduxjs/toolkit&#x27;</span>
+<span class="hljs-keyword">import</span> {todolist} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../features/todolist&quot;</span>;
+<span class="hljs-keyword">import</span> {typography} <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../features/typography&quot;</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> store = configureStore({
+  <span class="hljs-attr">reducer</span>: {
+    ...todolist.getReducer(),
+    ...typography.getReducer(),
+  },
 })
 </code></pre>
 				<p>And it&#39;s all :muscle: With <code>createFeature</code> and <code>useFieldState</code> everything is done.</p>
