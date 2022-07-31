@@ -20,10 +20,15 @@ npm i still-redux
 
 Yarn:
 ```
-yarn still-redux
+yarn add still-redux
 ```
 
-Install also `react`, `react-redux` and `redux`.
+Required dependencies:
+```
+npm i react
+npm i redux
+npm i react-redux
+```
 
 ## example
 
