@@ -1,0 +1,276 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>still-redux</title>
+	<meta name="description" content="Documentation for still-redux">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">still-redux</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>still-redux</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#still-redux" id="still-redux" style="color: inherit; text-decoration: none;">
+					<h1>still-redux</h1>
+				</a>
+				<p><code>Still-redux</code> is a utility that provides fast development of <code>redux</code> applications with a good developer experience. It&#39;s not a state manager, but a small wrapper around <code>redux</code> and is suitable for use in projects where <code>react-redux</code> is already used.</p>
+				<p>Made with respect to:<br>:star_struck: good api for fast development<br>:100: redux compatibility<br>:rocket: typescript support  </p>
+				<p>Forget what you know about <code>redux</code>. With <code>still-redux</code>, there are only two simple steps:</p>
+				<ol>
+					<li>define the initial state</li>
+					<li>describe the business logic in the hook</li>
+				</ol>
+				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+					<h2>example</h2>
+				</a>
+				<p>Typical todolist:</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { createFeature, useFieldState } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;still-redux&quot;</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> todolist = createFeature(<span class="hljs-string">&#x27;todolist&#x27;</span>, {
+   <span class="hljs-attr">items</span>: [{<span class="hljs-attr">text</span>: <span class="hljs-string">&#x27;add todos&#x27;</span>, <span class="hljs-attr">completed</span>: <span class="hljs-literal">false</span>}],
+   <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;my todolist&#x27;</span>,
+})
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> useTodolist = <span class="hljs-function">() =&gt;</span> {
+   <span class="hljs-keyword">const</span> [todos, setTodos] = useFieldState(todolist.items);
+   <span class="hljs-keyword">const</span> [listTitle, setListTitle] = useFieldState(todolist.title);
+
+   <span class="hljs-keyword">const</span> completedCount = todos.reduce&lt;number&gt;(
+       <span class="hljs-function">(<span class="hljs-params">count, item</span>) =&gt;</span> count + (item.completed ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>),
+       <span class="hljs-number">0</span>
+   );
+
+   <span class="hljs-keyword">const</span> inProgressCount = todos.length - completedCount;
+
+   <span class="hljs-keyword">const</span> addTodoItem = <span class="hljs-function">(<span class="hljs-params">text: string</span>) =&gt;</span> {
+       <span class="hljs-keyword">if</span> (!text || todos.some(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> item.text === text)) { <span class="hljs-keyword">return</span> }
+       setTodos(<span class="hljs-function">(<span class="hljs-params">items</span>) =&gt;</span> {
+           items.push({text, <span class="hljs-attr">completed</span>: <span class="hljs-literal">false</span>});
+           <span class="hljs-keyword">return</span> items;
+       });
+   }
+
+   <span class="hljs-keyword">const</span> removeTodoItem = <span class="hljs-function">(<span class="hljs-params">index: number</span>) =&gt;</span> {
+       setTodos(<span class="hljs-function"><span class="hljs-params">items</span> =&gt;</span> {
+           items.splice(index,<span class="hljs-number">1</span>);
+           <span class="hljs-keyword">return</span> items
+       })
+   }
+
+   <span class="hljs-keyword">const</span> toggleTodoItem = <span class="hljs-function">(<span class="hljs-params">itemIndex: number</span>) =&gt;</span> setTodos(<span class="hljs-function"><span class="hljs-params">items</span> =&gt;</span> {
+       items[itemIndex].completed = !items[itemIndex].completed;
+       <span class="hljs-keyword">return</span> items;
+   });
+
+   <span class="hljs-keyword">return</span> {
+       <span class="hljs-attr">data</span>: { todos, completedCount, inProgressCount, listTitle },
+       <span class="hljs-attr">handlers</span>: { addTodoItem, removeTodoItem, toggleTodoItem, setListTitle },
+   }
+}
+</code></pre>
+				<p>Now just add the automatically generated reducer to your root reducer:</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { combineReducers, createStore} <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;redux&#x27;</span>
+<span class="hljs-keyword">import</span> { todolist } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../features/todolist&quot;</span>;
+
+<span class="hljs-keyword">const</span> rootReducer = combineReducers({
+   ...todolist.getReducer(),
+   <span class="hljs-comment">// ... other reducers</span>
+})
+</code></pre>
+				<p>And it&#39;s all :muscle: With <code>createFeature</code> and <code>useFieldState</code> everything is done.</p>
+				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+					<h2>API</h2>
+				</a>
+				<a href="#createfeature" id="createfeature" style="color: inherit; text-decoration: none;">
+					<h3>createFeature</h3>
+				</a>
+				<p>The <code>createFeature</code> function takes a unique feature name and initial feature state. The returned object duplicates the initial state keys and used in special hooks.</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { createFeature } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;still-redux&quot;</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> myFeature = createFeature(<span class="hljs-string">&#x27;featureName&#x27;</span>, featureInitialState);
+</code></pre>
+				<p>It also takes an <code>options</code> with <code>featureSelector</code> for the case when you are using a nested store structure, i.e. with nested combineReducers:</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { combineReducers, createStore } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;redux&#x27;</span>;
+<span class="hljs-keyword">import</span> { createFeature } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;still-redux&quot;</span>;
+
+  <span class="hljs-keyword">const</span> feature = createFeature(
+    <span class="hljs-string">&#x27;feature&#x27;</span>, 
+    featureInitialState,
+    { <span class="hljs-attr">featureSelector</span>: <span class="hljs-function">(<span class="hljs-params">state</span>) =&gt;</span> state.featureScope.feature });
+
+  <span class="hljs-keyword">const</span> store = createStore(
+    combineReducers({
+        <span class="hljs-attr">featureScope</span>: combineReducers({ 
+          ...feature.getReducer() 
+        }),
+    })
+  );
+</code></pre>
+				<p>If featureSelector is not set, path state[featureName] will be used.</p>
+				<a href="#usefieldstate" id="usefieldstate" style="color: inherit; text-decoration: none;">
+					<h3>useFieldState</h3>
+				</a>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { useFieldState } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;still-redux&quot;</span>;
+
+   <span class="hljs-keyword">const</span> [someField, setSomeField] = useFieldState(myFeature.someField);
+</code></pre>
+				<p>The <code>useFieldState</code> hook is similar to the standard <code>useState</code> and does the same thing, but do it for redux store. It subscribes to the value of a field in the redux store and provides a method to update it. The update method works the same way as the update method from <code>useState</code>. The setter of <code>useFieldState</code> could receive:</p>
+				<ul>
+					<li>value</li>
+					<li>callback that takes the current value and returns the changed value.</li>
+				</ul>
+				<p>For example:</p>
+				<pre><code class="language-javascript">setSomeField([<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>])
+setSomeField(<span class="hljs-function">(<span class="hljs-params">currentArray</span>) =&gt;</span> currentArray.filter(<span class="hljs-function"><span class="hljs-params">value</span> =&gt;</span> value === <span class="hljs-number">1</span>)) <span class="hljs-comment">// mutation is ok</span>
+</code></pre>
+				<a href="#usefieldgetter-and-usefieldsetter" id="usefieldgetter-and-usefieldsetter" style="color: inherit; text-decoration: none;">
+					<h3>useFieldGetter and useFieldSetter</h3>
+				</a>
+				<p>It is possible to use these hooks instead of <code>useFieldState</code> if you need to get just the value from the store or just it&#39;s setter. <code>useFieldSetter</code> can be useful if you only want to change the value, but don&#39;t want to create a subscription.</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { createFeature, useFieldState } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;still-redux&quot;</span>;
+  
+<span class="hljs-keyword">const</span> someField = useFieldGetter(myFeature.someField);
+<span class="hljs-keyword">const</span> setSomeField = useFieldSetter(myFeature.someField);
+</code></pre>
+				<a href="#getreducer" id="getreducer" style="color: inherit; text-decoration: none;">
+					<h3>getReducer</h3>
+				</a>
+				<p><code>getReducer</code> is a helper from an object created by the <code>createFeature</code> function. Used to combine a feature reducer with a root reducer.</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { combineReducers, createStore} <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;redux&#x27;</span>
+<span class="hljs-keyword">import</span> { getReducer } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;still-redux&quot;</span>;
+
+<span class="hljs-keyword">const</span> rootReducer = combineReducers({
+   ...getReducer(myFeature), <span class="hljs-comment">// the object is {featureName: reducerFn}</span>
+   <span class="hljs-comment">// ... other reducers</span>
+})
+</code></pre>
+				<a href="#compatibility-with-the-redux-ecosystem" id="compatibility-with-the-redux-ecosystem" style="color: inherit; text-decoration: none;">
+					<h2>Compatibility with the Redux ecosystem</h2>
+				</a>
+				<p>You can get selector and actionCreator for any field created with <code>createFeature</code>.</p>
+				<p>ActionCreator takes either an object or a field modifier function.</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { createFeature } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;still-redux&quot;</span>;
+
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> todolist = createFeature(<span class="hljs-string">&#x27;todolist&#x27;</span>, {
+   <span class="hljs-attr">items</span>: [{<span class="hljs-attr">text</span>: <span class="hljs-string">&#x27;add todos&#x27;</span>, <span class="hljs-attr">completed</span>: <span class="hljs-literal">false</span>}],
+   <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;my todolist&#x27;</span>,
+})
+
+<span class="hljs-keyword">const</span> { selector, actionCreator} = todolist.items;
+</code></pre>
+				<p>Action Type can be obtained from actionCreator:</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> actionType = actionCreator.toString();
+</code></pre>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/featureoptions.html" class="tsd-kind-icon">Feature<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#anyfn" class="tsd-kind-icon">Any<wbr>Fn</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#selectorandactioncreator" class="tsd-kind-icon">Selector<wbr>And<wbr>Action<wbr>Creator</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#get_reducer_key" class="tsd-kind-icon">GET_<wbr>REDUCER_<wbr>KEY</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#createfeature" class="tsd-kind-icon">create<wbr>Feature</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#usefieldgetter" class="tsd-kind-icon">use<wbr>Field<wbr>Getter</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#usefieldsetter" class="tsd-kind-icon">use<wbr>Field<wbr>Setter</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#usefieldstate" class="tsd-kind-icon">use<wbr>Field<wbr>State</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
