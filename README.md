@@ -23,6 +23,8 @@ Yarn:
 yarn still-redux
 ```
 
+Install also `react`, `react-redux` and `redux`.
+
 ## example
 
 Typical todolist:
