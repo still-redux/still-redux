@@ -1,6 +1,6 @@
 {
   "name": "still-redux",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "rapid development of redux applications without boilerplate",
   "author": "Valeriy Dyachenko <dyachenko.vlr@gmail.com>",
   "main": "build/main/index.js",
