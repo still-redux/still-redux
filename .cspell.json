@@ -24,7 +24,8 @@
     "untracked",
     "todolist",
     "todos",
-    "immer"
+    "immer",
+    "reduxjs"
   ],
   "flagWords": [],
   "ignorePaths": [

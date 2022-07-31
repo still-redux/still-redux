@@ -4,7 +4,7 @@
 
 Made with respect to:  
 :star_struck: good api for fast development  
-:100: redux compatibility  
+:raised_hands: redux and redux-toolkit compatibility  
 :rocket: typescript support  
 
 Forget what you know about `redux`. With `still-redux`, there are only two simple steps:
@@ -89,6 +89,21 @@ import { todolist } from "../features/todolist";
 const rootReducer = combineReducers({
    ...todolist.getReducer(),
    // ... other reducers
+})
+```
+
+Or with `redux-toolkit` helper:
+
+```javascript
+import { configureStore } from '@reduxjs/toolkit'
+import {todolist} from "../features/todolist";
+import {typography} from "../features/typography";
+
+export const store = configureStore({
+  reducer: {
+    ...todolist.getReducer(),
+    ...typography.getReducer(),
+  },
 })
 ```
 
