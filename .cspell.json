@@ -21,7 +21,10 @@
     "sandboxed",
     "transpiled",
     "typedoc",
-    "untracked"
+    "untracked",
+    "todolist",
+    "todos",
+    "immer"
   ],
   "flagWords": [],
   "ignorePaths": [
