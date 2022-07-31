@@ -11,6 +11,18 @@ Forget what you know about `redux`. With `still-redux`, there are only two simpl
 1) define the initial state
 2) describe the business logic in the hook
 
+## installation
+
+Npm:
+```
+npm i still-redux
+```
+
+Yarn:
+```
+yarn still-redux
+```
+
 ## example
 
 Typical todolist:
