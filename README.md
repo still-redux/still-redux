@@ -172,7 +172,7 @@ setSomeField((currentArray) => currentArray.filter(value => value === 1)) // mut
 It is possible to use these hooks instead of `useFieldState` if you need to get just the value from the store or just it's setter. `useFieldSetter` can be useful if you only want to change the value, but don't want to create a subscription.
 
 ```javascript
-import { createFeature, useFieldState } from "still-redux";
+import { useFieldGetter, useFieldSetter } from "still-redux";
   
 const someField = useFieldGetter(myFeature.someField);
 const setSomeField = useFieldSetter(myFeature.someField);
@@ -185,6 +185,7 @@ const setSomeField = useFieldSetter(myFeature.someField);
 ```javascript
 import { combineReducers } from 'redux'
 import { todolist } from "../features/todolist";
+import { typography } from "../features/typography";
 
 const rootReducer = combineReducers({
   ...todolist.getReducer(),
