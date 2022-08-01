@@ -1,6 +1,6 @@
 # still-redux
 
-`Still-redux` is a utility that provides fast development of `redux` applications with a good developer experience. It's not a state manager, but a small wrapper around `redux` and is suitable for use in projects where `react-redux` is already used.
+`Still-redux` is a utility that provides fast development of `redux` applications with a good developer experience. It's not a state manager, but a small wrapper around `react-redux` and is suitable for use in projects where `react-redux` is already used.
 
 Made with respect to:  
 :star_struck: good api for fast development  
@@ -83,7 +83,7 @@ export const useTodolist = () => {
 Now just add the automatically generated reducer to your root reducer:
 
 ```javascript
-import { combineReducers, createStore} from 'redux'
+import { combineReducers } from 'redux'
 import { todolist } from "../features/todolist";
 
 const rootReducer = combineReducers({
@@ -142,14 +142,14 @@ const store = createStore(
 );
 ```
 
-If featureSelector is not set, path state[featureName] will be used.
+If featureSelector is not set, path `state[featureName]` will be used.
 
 ### useFieldState
 
 ```javascript
 import { useFieldState } from "still-redux";
 
-const MyComponent = () => {
+const useFeatureLogic = () => {
     const [someField, setSomeField] = useFieldState(myFeature.someField);
     // ...
 }
@@ -180,7 +180,7 @@ const setSomeField = useFieldSetter(myFeature.someField);
 
 ### getReducer
 
-`getReducer` is a helper from an object created by the `createFeature` function. Used to combine a feature reducer with a root reducer.
+`getReducer` is a method of an object created by the `createFeature` function. Used to combine a feature reducer with a root reducer.
 
 ```javascript
 import { combineReducers } from 'redux'
