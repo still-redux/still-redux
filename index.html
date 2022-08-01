@@ -211,7 +211,7 @@ setSomeField(<span class="hljs-function">(<span class="hljs-params">currentArray
 					<h3>useFieldGetter and useFieldSetter</h3>
 				</a>
 				<p>It is possible to use these hooks instead of <code>useFieldState</code> if you need to get just the value from the store or just it&#39;s setter. <code>useFieldSetter</code> can be useful if you only want to change the value, but don&#39;t want to create a subscription.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { createFeature, useFieldState } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;still-redux&quot;</span>;
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { useFieldGetter, useFieldSetter } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;still-redux&quot;</span>;
   
 <span class="hljs-keyword">const</span> someField = useFieldGetter(myFeature.someField);
 <span class="hljs-keyword">const</span> setSomeField = useFieldSetter(myFeature.someField);
@@ -222,6 +222,7 @@ setSomeField(<span class="hljs-function">(<span class="hljs-params">currentArray
 				<p><code>getReducer</code> is a helper from an object created by the <code>createFeature</code> function. Used to combine a feature reducer with a root reducer.</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { combineReducers } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;redux&#x27;</span>
 <span class="hljs-keyword">import</span> { todolist } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../features/todolist&quot;</span>;
+<span class="hljs-keyword">import</span> { typography } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../features/typography&quot;</span>;
 
 <span class="hljs-keyword">const</span> rootReducer = combineReducers({
   ...todolist.getReducer(),
