@@ -96,8 +96,8 @@ Or with `redux-toolkit` helper:
 
 ```javascript
 import { configureStore } from '@reduxjs/toolkit'
-import {todolist} from "../features/todolist";
-import {typography} from "../features/typography";
+import { todolist } from "../features/todolist";
+import { typography } from "../features/typography";
 
 export const store = configureStore({
   reducer: {
@@ -124,21 +124,22 @@ export const myFeature = createFeature('featureName', featureInitialState);
 It also takes an `options` with `featureSelector` for the case when you are using a nested store structure, i.e. with nested combineReducers:
 
 ```javascript
-import { combineReducers, createStore } from 'redux';
+import { createStore } from 'redux';
 import { createFeature } from "still-redux";
 
-  const feature = createFeature(
-    'feature', 
-    featureInitialState,
-    { featureSelector: (state) => state.featureScope.feature });
+const feature = createFeature(
+  'feature', 
+  featureInitialState,
+  { featureSelector: (state) => state.featureScope.feature }
+);
 
-  const store = createStore(
-    combineReducers({
-        featureScope: combineReducers({ 
-          ...feature.getReducer() 
-        }),
-    })
-  );
+const store = createStore(
+  combineReducers({                    // outer combineReducers
+      featureScope: combineReducers({  // inner combineReducers
+        ...feature.getReducer()        // result state structure: {featureScope: {feature: {...}}}
+      }),
+  })
+);
 ```
 
 If featureSelector is not set, path state[featureName] will be used.
@@ -148,7 +149,10 @@ If featureSelector is not set, path state[featureName] will be used.
 ```javascript
 import { useFieldState } from "still-redux";
 
-   const [someField, setSomeField] = useFieldState(myFeature.someField);
+const MyComponent = () => {
+    const [someField, setSomeField] = useFieldState(myFeature.someField);
+    // ...
+}
 ```
 
 The `useFieldState` hook is similar to the standard `useState` and does the same thing, but do it for redux store. It subscribes to the value of a field in the redux store and provides a method to update it. The update method works the same way as the update method from `useState`. The setter of `useFieldState` could receive:
@@ -179,12 +183,27 @@ const setSomeField = useFieldSetter(myFeature.someField);
 `getReducer` is a helper from an object created by the `createFeature` function. Used to combine a feature reducer with a root reducer.
 
 ```javascript
-import { combineReducers, createStore} from 'redux'
-import { getReducer } from "still-redux";
+import { combineReducers } from 'redux'
+import { todolist } from "../features/todolist";
 
 const rootReducer = combineReducers({
-   ...getReducer(myFeature), // the object is {featureName: reducerFn}
-   // ... other reducers
+  ...todolist.getReducer(),
+  ...typography.getReducer(),
+})
+```
+
+Or with `redux-toolkit` helper:
+
+```javascript
+import { configureStore } from '@reduxjs/toolkit'
+import { todolist } from "../features/todolist";
+import { typography } from "../features/typography";
+
+export const store = configureStore({
+  reducer: {
+    ...todolist.getReducer(),
+    ...typography.getReducer(),
+  },
 })
 ```
 
